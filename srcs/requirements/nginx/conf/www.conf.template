@@ -1,0 +1,40 @@
+server {
+  listen 443 ssl;
+  ssl_protocols TLSv1.2 TLSv1.3;
+
+  server_name ${DOMAIN_NAME};
+
+  ssl_certificate /etc/ssl/certs/inception.${DOMAIN_NAME}.crt;
+  ssl_certificate_key /etc/ssl/certs/inception.${DOMAIN_NAME}.key;
+
+  root /var/www/html;
+  index index.php;
+
+  location / {
+    try_files $uri $uri/ /index.php?$args;
+  }
+
+  location ~ \.php$ {
+    try_files $uri =404;
+    fastcgi_split_path_info ^(.+\.php)(/.+)$;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include fastcgi_params;
+    fastcgi_pass wordpress:9000;
+  }
+
+	location ~ ^/adminer(/.*$|$) {
+		fastcgi_index index.php;
+		include /etc/nginx/fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME /var/www/html/index.php;
+		fastcgi_pass adminer:9000;
+	}
+
+  location /simple-portfolio/ {
+    proxy_pass http://simple-portfolio:3000/;
+  }
+
+  location /badge42/ {
+    proxy_pass http://badge42:3000/;
+  }
+}

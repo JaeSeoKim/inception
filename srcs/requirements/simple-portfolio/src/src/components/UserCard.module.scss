@@ -1,0 +1,57 @@
+@import "../styles/variables";
+
+.conatiner {
+  display: flex;
+  flex-direction: column;
+}
+
+.userImg {
+  border-radius: 9999px;
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 12rem;
+}
+
+.infoSection {
+  padding-top: 2rem;
+  text-align: center;
+}
+
+.quote {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+}
+
+.figcaption {
+  font-weight: 500;
+}
+
+.name {
+  color: $primary-color;
+}
+
+.career {
+  color: rgba(75, 85, 99);
+}
+
+.links {
+  padding-top: 0.5rem;
+  display: inline-flex;
+  gap: 8px;
+}
+
+.icon {
+  width: 24px;
+
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+
+  fill: rgba(156, 163, 175);
+
+  &:hover {
+    fill: rgba(31, 41, 55);
+  }
+}

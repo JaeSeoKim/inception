@@ -1,0 +1,121 @@
+version: "3.9"
+
+services:
+  nginx:
+    restart: always
+    depends_on:
+      - wordpress
+      - adminer
+      - badge42
+      - simple-portfolio
+    build:
+      context: srcs/requirements/nginx
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - intra
+    ports:
+      - "443:443"
+    env_file:
+      - .env
+  wordpress:
+    restart: always
+    depends_on:
+      - mariadb
+      - redis
+    build:
+      context: srcs/requirements/wordpress
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - intra
+    expose:
+      - "9000"
+    env_file:
+      - .env
+  mariadb:
+    restart: always
+    build:
+      context: srcs/requirements/mariadb
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - intra
+    expose:
+      - "3306"
+    env_file:
+      - .env
+  redis:
+    restart: always
+    build:
+      context: srcs/requirements/redis
+    networks:
+      - intra
+    expose:
+      - "6379"
+    env_file:
+      - .env
+  adminer:
+    restart: always
+    depends_on:
+      - mariadb
+    build:
+      context: srcs/requirements/adminer
+    networks:
+      - intra
+    expose:
+      - "9000"
+  ftp:
+    restart: always
+    build:
+      context: srcs/requirements/ftp
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - intra
+    expose:
+      - "20"
+      - "21"
+    ports:
+      - "20:20"
+      - "21:21"
+    env_file:
+      - .env
+  badge42:
+    restart: always
+    build:
+      context: srcs/requirements/badge42
+    networks:
+      - intra
+    expose:
+      - "3000"
+    env_file:
+      - .env
+  simple-portfolio:
+    restart: always
+    build:
+      context: srcs/requirements/simple-portfolio
+    networks:
+      - intra
+    expose:
+      - "3000"
+    env_file:
+      - .env
+
+networks:
+  intra:
+    driver: bridge
+
+volumes:
+  db_data:
+    # driver: local
+    # driver_opts:
+    #   type: "none"
+    #   o: "bind"
+    #   device: "~/data/db_data"
+  wordpress_data:
+    # driver: local
+    # driver_opts:
+    #   type: "none"
+    #   o: "bind"
+    #   device: "~/data/wordpress_data"

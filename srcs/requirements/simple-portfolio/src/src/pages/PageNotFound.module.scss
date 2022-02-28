@@ -1,0 +1,19 @@
+@import "../styles/variables";
+
+.quote {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  font-size: 2rem;
+
+  border-style: solid;
+  border-width: 0px;
+  border-left-width: 4px;
+  border-color: $primary-color;
+
+  padding-left: 1rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
