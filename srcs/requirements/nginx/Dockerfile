@@ -37,4 +37,6 @@ EXPOSE 443/tcp
 
 STOPSIGNAL SIGQUIT
 
+VOLUME ["/var/www/html"]
+
 CMD ["nginx", "-g", "daemon off;"]

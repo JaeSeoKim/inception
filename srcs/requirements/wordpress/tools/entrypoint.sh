@@ -26,11 +26,11 @@ if ! wp core is-installed; then
   wp config set WP_REDIS_PASSWORD $REDIS_PASSWORD
   wp config set WP_REDIS_CLIENT phpredis
   wp core install \
-    --url=$DOMAIN_NAME --title=$WP_TITLE \
-    --admin_user=$WP_ADMIN_USER --admin_email=$WP_ADMIN_EMAIL --admin_password=$WP_ADMIN_PASSWORD
+    --url="$DOMAIN_NAME" --title="$WP_TITLE" \
+    --admin_user="$WP_ADMIN_USER" --admin_email="$WP_ADMIN_EMAIL" --admin_password="$WP_ADMIN_PASSWORD"
   wp plugin install redis-cache --activate
   wp user create --porcelain \
-    $WP_AUTHOR_USER $WP_AUTHOR_EMAIL --role=author --user_pass=$WP_AUTHOR_PASSWORD
+    "$WP_AUTHOR_USER" "$WP_AUTHOR_EMAIL" --role=author --user_pass="$WP_AUTHOR_PASSWORD"
   wp redis update-dropin
   wp redis enable
   chown -R 82:82 /var/www/html

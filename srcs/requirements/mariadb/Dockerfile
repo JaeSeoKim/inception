@@ -13,4 +13,6 @@ ENTRYPOINT ["/entrypoint.sh"]
 EXPOSE 3306
 STOPSIGNAL SIGQUIT
 
+VOLUME ["/var/lib/mysql"]
+
 CMD ["mysqld_safe"]

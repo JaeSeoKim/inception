@@ -16,4 +16,6 @@ ENTRYPOINT ["/entrypoint.sh"]
 EXPOSE 20/tcp 21/tcp
 STOPSIGNAL SIGQUIT
 
+VOLUME ["/var/www/html"]
+
 CMD ["vsftpd"]

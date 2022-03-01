@@ -13,7 +13,7 @@ RUN apk update && \
   php8-pdo_mysql php8-mysqli php8-session \
   php8-gd php8-iconv php8-gmp php8-zip \
   php8-curl php8-opcache php8-ctype php8-apcu \
-  php8-intl php8-bcmath php8-dom php8-mbstring php8-xmlreader php8-redis
+  php8-intl php8-bcmath php8-dom php8-mbstring php8-xmlreader php8-redis php8-tokenizer
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
   chmod +x wp-cli.phar && \
@@ -29,5 +29,7 @@ ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 9000
 STOPSIGNAL SIGQUIT
+
+VOLUME ["/var/www/html"]
 
 CMD ["php-fpm8", "--nodaemonize"]

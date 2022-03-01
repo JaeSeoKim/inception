@@ -15,14 +15,14 @@ TARGET=srcs/docker-compose.yml
 
 all: up
 
-up:
+up: local
 	docker-compose -p ${NAME} -f ${TARGET} up -d
 
 down:
 	docker-compose -p ${NAME} -f ${TARGET} down
 
 fdown:
-	docker-compose -p ${NAME} -f ${TARGET} down --rmi all --volumes all
+	docker-compose -p ${NAME} -f ${TARGET} down --rmi all --volumes
 
 start:
 	docker-compose -p ${NAME} -f ${TARGET} start
@@ -39,4 +39,15 @@ fbuild:
 logs:
 	docker-compose -p ${NAME} -f ${TARGET} logs
 
-.PHONY: all up down fdown start stop build fbuild
+clear_local:
+	sudo rm -rf ~/data
+
+local: ~/data/wordpress_data ~/data/db_data
+
+~/data/wordpress_data:
+	mkdir -p ~/data/wordpress_data
+
+~/data/db_data:
+	mkdir -p ~/data/db_data
+
+.PHONY: all up down fdown start stop build fbuild local clear_local

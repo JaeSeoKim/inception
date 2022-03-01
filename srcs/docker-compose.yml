@@ -9,7 +9,7 @@ services:
       - badge42
       - simple-portfolio
     build:
-      context: srcs/requirements/nginx
+      context: requirements/nginx
     volumes:
       - wordpress_data:/var/www/html
     networks:
@@ -24,7 +24,7 @@ services:
       - mariadb
       - redis
     build:
-      context: srcs/requirements/wordpress
+      context: requirements/wordpress
     volumes:
       - wordpress_data:/var/www/html
     networks:
@@ -36,7 +36,7 @@ services:
   mariadb:
     restart: always
     build:
-      context: srcs/requirements/mariadb
+      context: requirements/mariadb
     volumes:
       - db_data:/var/lib/mysql
     networks:
@@ -48,7 +48,7 @@ services:
   redis:
     restart: always
     build:
-      context: srcs/requirements/redis
+      context: requirements/redis
     networks:
       - intra
     expose:
@@ -60,7 +60,7 @@ services:
     depends_on:
       - mariadb
     build:
-      context: srcs/requirements/adminer
+      context: requirements/adminer
     networks:
       - intra
     expose:
@@ -68,7 +68,7 @@ services:
   ftp:
     restart: always
     build:
-      context: srcs/requirements/ftp
+      context: requirements/ftp
     volumes:
       - wordpress_data:/var/www/html
     networks:
@@ -84,7 +84,7 @@ services:
   badge42:
     restart: always
     build:
-      context: srcs/requirements/badge42
+      context: requirements/badge42
     networks:
       - intra
     expose:
@@ -94,7 +94,7 @@ services:
   simple-portfolio:
     restart: always
     build:
-      context: srcs/requirements/simple-portfolio
+      context: requirements/simple-portfolio
     networks:
       - intra
     expose:
@@ -108,14 +108,12 @@ networks:
 
 volumes:
   db_data:
-    # driver: local
-    # driver_opts:
-    #   type: "none"
-    #   o: "bind"
-    #   device: "~/data/db_data"
+    driver_opts:
+      type: "none"
+      o: "bind"
+      device: "~/data/db_data"
   wordpress_data:
-    # driver: local
-    # driver_opts:
-    #   type: "none"
-    #   o: "bind"
-    #   device: "~/data/wordpress_data"
+    driver_opts:
+      type: "none"
+      o: "bind"
+      device: "~/data/wordpress_data"
